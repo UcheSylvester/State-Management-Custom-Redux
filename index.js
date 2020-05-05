@@ -38,9 +38,34 @@ const createStore = (reducer) => {
 //  APP/USER CODE
 // Reducer
 const todos = (state = [], action) => {
-  if (action.type === "ADD_TODO") return [...state, action.todo];
+  switch (action.type) {
+    case "ADD_TODO":
+      return [...state, action.todo];
 
-  return state;
+    case "REMOVE_TODO":
+      return state.filter((todo) => todo.id !== action.id);
+
+    case "TOGGLE_TODO":
+      return state.map((todo) =>
+        todo.id !== action.id ? todo : { ...todo, complete: !todo.complete }
+      );
+
+    default:
+      return state;
+  }
+};
+
+const goals = (state = [], action) => {
+  switch (action.type) {
+    case "ADD_GOAL":
+      return [...state, action.goal];
+
+    case "REMOVE_GOAL":
+      return state.filter((todo) => todo.id !== action.id);
+
+    default:
+      return state;
+  }
 };
 
 // creating the store;
