@@ -68,11 +68,21 @@ const goals = (state = [], action) => {
   }
 };
 
+const { getStore, subscribe, dispatch } = store;
+
+// const combinedReducer = ({...reducers}) => {
+
+// }
+
+const app = (state = {}, action) => ({
+  todos: todos(state.todos, action),
+  goals: todos(state.goals, action),
+});
+
 // creating the store;
 const store = createStore(todos);
 
 // destructure the returned value from the store
-const { getStore, subscribe, dispatch } = store;
 
 // subscribing to changes in the store;
 subscribe(() => {
