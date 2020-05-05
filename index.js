@@ -6,20 +6,35 @@ const createStore = () => {
   // getting the store
   const getStore = () => store;
 
-  const subscribe = (listener) => listeners.push(listener);
+  // subscribing to changes in our store;
+  const subscribe = (listener) => {
+    // adding the store listener to the list of listeners
+    listeners.push(listener);
+
+    // return a function that can be invoked to unsubscribe for the changes by
+    // removing the listener from the list of listeners
+    return () => {
+      listeners = listeners.filter((l) => l !== listener);
+    };
+  };
 
   return {
     getStore,
   };
 };
 
-// user
+// USER
+
+// creating the store;
 const store = createStore();
 
+// subscribing to changes in the store;
 store.subscribe(() => {
   console.log("The state is:", store.getStore());
 });
 
-store.subscribe(() => {
-  console.log("new state is:", store.getStore());
+// unsubscribe from changes in the store
+const unSubscribe = store.subscribe(() => {
+  console.log("State changed:", store.getStore());
 });
+// unSubscribe(); to unsubscribe
