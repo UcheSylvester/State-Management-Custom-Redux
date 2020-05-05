@@ -25,6 +25,15 @@ const createStore = () => {
     };
   };
 
+  // dispatch is the function that takes the action and calls the reducer with
+  // the action and currentState to udpate the state
+  const dispatch = (action) => {
+    state = todos(state, action);
+
+    // alerting all listeners on the store of the new change
+    listeners.forEach((listener) => listener());
+  };
+
   return {
     getStore,
     subscribe,
