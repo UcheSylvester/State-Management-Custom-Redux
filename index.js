@@ -1,11 +1,5 @@
-// Reducer
-const todos = (state = [], action) => {
-  if (action.type === "ADD_TODO") return [...state, action.todo];
-
-  return state;
-};
-
-const createStore = () => {
+// LIBRARY CODE
+const createStore = (reducer) => {
   // The store
   let store,
     listeners = [];
@@ -28,7 +22,7 @@ const createStore = () => {
   // dispatch is the function that takes the action and calls the reducer with
   // the action and currentState to udpate the state
   const dispatch = (action) => {
-    state = todos(state, action);
+    state = reducer(state, action);
 
     // alerting all listeners on the store of the new change
     listeners.forEach((listener) => listener());
@@ -37,13 +31,20 @@ const createStore = () => {
   return {
     getStore,
     subscribe,
+    dispatch,
   };
 };
 
-// USER
+//  APP/USER CODE
+// Reducer
+const todos = (state = [], action) => {
+  if (action.type === "ADD_TODO") return [...state, action.todo];
+
+  return state;
+};
 
 // creating the store;
-const store = createStore();
+const store = createStore(todos);
 
 // subscribing to changes in the store;
 store.subscribe(() => {
