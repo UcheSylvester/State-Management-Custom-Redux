@@ -1,3 +1,10 @@
+// Reducer
+const todos = (state = [], action) => {
+  if (action.type === "ADD_TODO") return [...state, action.todo];
+
+  return state;
+};
+
 const createStore = () => {
   // The store
   let store,
@@ -6,7 +13,7 @@ const createStore = () => {
   // getting the store
   const getStore = () => store;
 
-  // subscribing to changes in our store;
+  // subscribing/listen to changes in our store;
   const subscribe = (listener) => {
     // adding the store listener to the list of listeners
     listeners.push(listener);
@@ -20,6 +27,7 @@ const createStore = () => {
 
   return {
     getStore,
+    subscribe,
   };
 };
 
@@ -33,8 +41,9 @@ store.subscribe(() => {
   console.log("The state is:", store.getStore());
 });
 
-// unsubscribe from changes in the store
+// unsubscribe from changes in the store by calling the function for subscribing
+// to changes in the store
 const unSubscribe = store.subscribe(() => {
   console.log("State changed:", store.getStore());
 });
-// unSubscribe(); to unsubscribe
+unSubscribe(); //  to unsubscribe
