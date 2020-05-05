@@ -20,7 +20,7 @@ const createStore = (reducer) => {
   };
 
   // dispatch is the function that takes the action and calls the reducer with
-  // the action and currentState to udpate the state
+  // the action and currentState to update the store
   const dispatch = (action) => {
     store = reducer(store, action);
 
