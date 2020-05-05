@@ -22,7 +22,7 @@ const createStore = (reducer) => {
   // dispatch is the function that takes the action and calls the reducer with
   // the action and currentState to udpate the state
   const dispatch = (action) => {
-    state = reducer(state, action);
+    store = reducer(store, action);
 
     // alerting all listeners on the store of the new change
     listeners.forEach((listener) => listener());
@@ -46,14 +46,26 @@ const todos = (state = [], action) => {
 // creating the store;
 const store = createStore(todos);
 
+// destructure the returned value from the store
+const { getStore, subscribe, dispatch } = store;
+
 // subscribing to changes in the store;
-store.subscribe(() => {
-  console.log("The state is:", store.getStore());
+subscribe(() => {
+  console.log("The state is:", getStore());
+});
+
+dispatch({
+  type: "ADD_TODO",
+  todo: {
+    id: 0,
+    name: "Build A mini redux library out of this",
+    complete: false,
+  },
 });
 
 // unsubscribe from changes in the store by calling the function for subscribing
 // to changes in the store
-const unSubscribe = store.subscribe(() => {
-  console.log("State changed:", store.getStore());
-});
-unSubscribe(); //  to unsubscribe
+// const unSubscribe = subscribe(() => {
+//   console.log("State changed:", getStore());
+// });
+// unSubscribe(); //  to unsubscribe
